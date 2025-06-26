@@ -81,35 +81,6 @@ Automated-Multiphase-Flow-Analyzer-System/
     └── industrial_pc/          # Industrial PC configuration
 ```
 
-## Quick Start
-
-### Prerequisites
-```bash
-Python 3.9+
-Industrial automation libraries
-Time-series database (InfluxDB)
-Web framework (Streamlit/Dash)
-```
-
-### Installation
-```bash
-git clone https://github.com/yourusername/Automated-Multiphase-Flow-Analyzer-System
-cd Automated-Multiphase-Flow-Analyzer-System
-pip install -r requirements.txt
-```
-
-### Running the System
-```bash
-# Start the PLC controller
-python src/plc_controller/main_controller.py
-
-# Launch HMI interface
-streamlit run src/hmi_interface/main_hmi.py
-
-# Start analysis engine
-python src/analysis_engine/multiphase_analyzer.py
-```
-
 ## Key Technologies
 - **Python**: Core system implementation
 - **Streamlit/Plotly**: Professional HMI interface
@@ -130,13 +101,6 @@ python src/analysis_engine/multiphase_analyzer.py
 - **Processing Facilities**: Multiphase flow measurement
 - **Subsea Operations**: Remote monitoring and control
 - **Quality Control**: Oil-in-water contamination detection
-
-## Professional Relevance
-This project demonstrates expertise directly applicable to:
-- **Mirmorax AS**: Automatic Sampling Systems and Multiphase Analyzers
-- **Oil & Gas Industry**: Offshore platform automation
-- **Industrial Automation**: PLC programming and SCADA systems
-- **Process Control**: Real-time monitoring and control systems
 
 ## Contact
 Developed by Md. Saidul Islam  
