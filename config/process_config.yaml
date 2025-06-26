@@ -1,0 +1,314 @@
+# Process Configuration for Automated Multiphase Flow Analyzer
+# Industrial automation system configuration file
+
+# System Information
+system:
+  name: "Automated Multiphase Flow Analyzer"
+  version: "1.0.0"
+  description: "Professional multiphase flow analysis system for oil & gas industry"
+  manufacturer: "Advanced Process Systems"
+  
+# Scan and Timing Configuration
+timing:
+  scan_time: 0.1  # PLC scan time in seconds (100ms)
+  communication_rate: 0.5  # Communication update rate in seconds
+  data_logging_rate: 1.0  # Data logging rate in seconds
+  hmi_refresh_rate: 2.0  # HMI refresh rate in seconds
+
+# PID Controller Parameters
+controllers:
+  flow:
+    description: "Flow rate control loop"
+    kp: 1.5  # Proportional gain
+    ki: 0.3  # Integral gain
+    kd: 0.1  # Derivative gain
+    output_min: 0.0  # Minimum output (%)
+    output_max: 100.0  # Maximum output (%)
+    integral_limit: 50.0  # Anti-windup limit
+    deadband: 0.5  # Deadband (m³/h)
+    setpoint_default: 100.0  # Default setpoint (m³/h)
+    
+  pressure:
+    description: "Inlet pressure control loop"
+    kp: 2.0
+    ki: 0.5
+    kd: 0.2
+    output_min: 0.0
+    output_max: 100.0
+    integral_limit: 30.0
+    deadband: 0.2  # Deadband (bar)
+    setpoint_default: 25.0  # Default setpoint (bar)
+    
+  temperature:
+    description: "Temperature control loop"
+    kp: 1.2
+    ki: 0.2
+    kd: 0.15
+    output_min: 0.0
+    output_max: 100.0
+    integral_limit: 40.0
+    deadband: 1.0  # Deadband (°C)
+    setpoint_default: 60.0  # Default setpoint (°C)
+
+# Process Variable Limits and Ranges
+process_variables:
+  flow_rate:
+    unit: "m³/h"
+    min_value: 0.0
+    max_value: 200.0
+    normal_range: [50.0, 150.0]
+    alarm_high: 180.0
+    alarm_low: 10.0
+    
+  pressure_inlet:
+    unit: "bar"
+    min_value: 0.0
+    max_value: 50.0
+    normal_range: [20.0, 30.0]
+    alarm_high: 40.0
+    alarm_low: 5.0
+    
+  pressure_outlet:
+    unit: "bar"
+    min_value: 0.0
+    max_value: 40.0
+    normal_range: [15.0, 25.0]
+    alarm_high: 35.0
+    alarm_low: 3.0
+    
+  temperature:
+    unit: "°C"
+    min_value: 0.0
+    max_value: 100.0
+    normal_range: [50.0, 70.0]
+    alarm_high: 85.0
+    alarm_low: 20.0
+    
+  gas_volume_fraction:
+    unit: "%"
+    min_value: 0.0
+    max_value: 100.0
+    normal_range: [5.0, 25.0]
+    alarm_high: 95.0
+    warning_high: 80.0
+    
+  water_cut:
+    unit: "%"
+    min_value: 0.0
+    max_value: 100.0
+    normal_range: [20.0, 60.0]
+    alarm_high: 95.0
+    warning_high: 85.0
+    
+  oil_in_water_ppm:
+    unit: "ppm"
+    min_value: 0.0
+    max_value: 2000.0
+    normal_range: [0.0, 500.0]
+    alarm_high: 1000.0  # Environmental compliance limit
+    warning_high: 800.0
+
+# Instrument Configuration
+instruments:
+  flow_meter:
+    type: "Coriolis"
+    manufacturer: "Emerson"
+    model: "Micro Motion F300"
+    accuracy: "±0.1%"
+    range: "0-200 m³/h"
+    output: "4-20mA"
+    
+  pressure_transmitter_inlet:
+    type: "Absolute Pressure"
+    manufacturer: "Rosemount"
+    model: "3051C"
+    accuracy: "±0.075%"
+    range: "0-50 bar"
+    output: "4-20mA"
+    
+  pressure_transmitter_outlet:
+    type: "Absolute Pressure"
+    manufacturer: "Rosemount"
+    model: "3051C"
+    accuracy: "±0.075%"
+    range: "0-40 bar"
+    output: "4-20mA"
+    
+  temperature_transmitter:
+    type: "RTD"
+    manufacturer: "Wika"
+    model: "TR10-A"
+    accuracy: "±0.1°C"
+    range: "0-100°C"
+    output: "4-20mA"
+    
+  density_meter:
+    type: "Vibrating Fork"
+    manufacturer: "Endress+Hauser"
+    model: "FML621"
+    accuracy: "±1 kg/m³"
+    range: "0-2000 kg/m³"
+    output: "4-20mA"
+
+# Valve Configuration
+valves:
+  inlet_valve:
+    type: "Control Valve"
+    manufacturer: "Fisher"
+    model: "ED Series"
+    size: "4 inch"
+    cv: 120
+    actuator: "Electric"
+    control_signal: "4-20mA"
+    
+  outlet_valve:
+    type: "Control Valve"
+    manufacturer: "Fisher"
+    model: "ED Series"
+    size: "3 inch"
+    cv: 80
+    actuator: "Electric"
+    control_signal: "4-20mA"
+    
+  sample_valve:
+    type: "Ball Valve"
+    manufacturer: "Swagelok"
+    model: "SS-43S4"
+    size: "1/2 inch"
+    actuator: "Pneumatic"
+    control_signal: "24VDC"
+
+# Pump Configuration
+pump:
+  type: "Centrifugal"
+  manufacturer: "Grundfos"
+  model: "CR 32-4"
+  max_flow: "200 m³/h"
+  max_head: "40 bar"
+  power: "15 kW"
+  control: "VFD"
+  control_signal: "4-20mA"
+
+# Multiphase Analysis Parameters
+analysis:
+  gas_detection:
+    method: "Density-based calculation"
+    calibration_gas_density: 1.2  # kg/m³ at standard conditions
+    calibration_oil_density: 850.0  # kg/m³
+    calibration_water_density: 1000.0  # kg/m³
+    
+  water_cut_analysis:
+    method: "Density differential"
+    calibration_curve: "linear"  # linear, polynomial, custom
+    temperature_compensation: true
+    pressure_compensation: true
+    
+  oil_in_water_detection:
+    method: "Spectroscopic analysis"
+    detection_limit: 1.0  # ppm
+    measurement_uncertainty: "±10%"
+    sample_volume: 100  # ml
+    analysis_time: 30  # seconds
+
+# Communication Configuration
+communication:
+  modbus_tcp:
+    enabled: true
+    port: 502
+    unit_id: 1
+    timeout: 5000  # milliseconds
+    
+  opcua:
+    enabled: true
+    port: 4840
+    endpoint: "opc.tcp://localhost:4840"
+    security_policy: "None"
+    
+  ethernet_ip:
+    enabled: false
+    ip_address: "192.168.1.100"
+    rack: 0
+    slot: 1
+
+# Data Management
+data_management:
+  database:
+    type: "InfluxDB"
+    host: "localhost"
+    port: 8086
+    database: "multiphase_analyzer"
+    retention_policy: "7d"  # 7 days
+    
+  logging:
+    level: "INFO"
+    file: "system.log"
+    max_size: "10MB"
+    backup_count: 5
+    
+  backup:
+    enabled: true
+    interval: "24h"
+    location: "./backups"
+    retention: "30d"
+
+# HMI Configuration
+hmi:
+  title: "Multiphase Flow Analyzer HMI"
+  theme: "industrial_dark"
+  refresh_rate: 2000  # milliseconds
+  alarm_sound: true
+  trend_history: "2h"  # 2 hours
+  
+  screens:
+    overview:
+      enabled: true
+      default: true
+    trends:
+      enabled: true
+      charts: ["flow", "pressure", "temperature", "analysis"]
+    alarms:
+      enabled: true
+      max_display: 50
+    diagnostics:
+      enabled: true
+      access_level: "engineer"
+
+# Quality Control
+quality_control:
+  sampling:
+    auto_sampling: true
+    sample_interval: 300  # seconds (5 minutes)
+    sample_duration: 10  # seconds
+    stability_check: true
+    stability_tolerance: 5  # % deviation
+    
+  validation:
+    mass_balance_check: true
+    cross_validation: true
+    outlier_detection: true
+    statistical_limits: "3-sigma"
+    
+  reporting:
+    batch_reports: true
+    shift_reports: true
+    daily_reports: true
+    export_format: ["PDF", "CSV", "Excel"]
+
+# Maintenance
+maintenance:
+  calibration:
+    flow_meter: "quarterly"
+    pressure_transmitters: "semi-annually"
+    temperature_transmitter: "annually"
+    density_meter: "quarterly"
+    
+  preventive_maintenance:
+    pump: "monthly"
+    valves: "quarterly"
+    control_system: "annually"
+    
+  condition_monitoring:
+    vibration: true
+    temperature: true
+    pressure_trends: true
+    performance_degradation: true 
